@@ -15,6 +15,11 @@ namespace WebApplication2.Controllers
             _logger = logger;
             _context = db;
         }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();  // Clear all session data
+            return RedirectToAction("Index", "Home");  // Redirect to home or login page
+        }
 
         public IActionResult Index()
         {
@@ -56,8 +61,8 @@ namespace WebApplication2.Controllers
            var obj = _context.table1.FirstOrDefault(x=>x.Email== s.Email && x.Password==s.Password);
             if (obj != null)
             {
-               /* HttpContext.Session.SetString("Email", obj.Email);
-                HttpContext.Session.SetString("Role", obj.Role);*/
+               HttpContext.Session.SetString("Email", obj.Email);
+                HttpContext.Session.SetString("Role", obj.Role);
                 if (obj.Role == "user")
                 {
                     return RedirectToAction("Index");
@@ -105,6 +110,31 @@ namespace WebApplication2.Controllers
         {
             return View();
         }*/
+
+
+
+        public IActionResult create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult create(product model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.table2.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("list");
+
+            }
+            return View();
+        }
+        public IActionResult list(product us)
+        {
+            var list = _context.table2.ToList();
+
+            return View(list);
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

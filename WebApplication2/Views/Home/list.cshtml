@@ -1,0 +1,133 @@
+﻿@model IEnumerable<WebApplication2.Models.product>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Product List</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Table Styling */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .table th, .table td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: gray;
+                color: white;
+            }
+
+            .table tr:hover {
+                background-color: #f1f1f1;
+            }
+
+            /* Table Action Links */
+            .table td a {
+                color: gray;
+                text-decoration: none;
+                margin: 0 5px;
+            }
+
+                .table td a:hover {
+                    text-decoration: underline;
+                }
+
+        /* Create New Button Styling */
+        .create-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: gray;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 20px 0;
+        }
+
+            .create-btn:hover {
+                background-color: gray;
+            }
+
+       
+
+        {
+            padding: 8px;
+        }
+
+        .create-btn {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <p>
+        <a href="@Url.Action("Create")" class="create-btn">Create New</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.price)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.price)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>
